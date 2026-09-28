@@ -1,0 +1,20 @@
+{
+  "tamperDetected": true,
+  "verdict": "MANIPULACION DETECTADA: la hash-chain se rompe en seq 5 (un asiento fue editado o borrado tras encadenarse);",
+  "chainIntact": false,
+  "chainedCount": 4,
+  "brokenAtSeq": 5,
+  "checkpointPresent": true,
+  "signatureAlgorithm": "ML-DSA-65",
+  "signedChainSeq": 5,
+  "signedHeadHash": "cde677b30425f78e44daf29dda7d335dc82ebf16de341aeddc1849aad0ad0952",
+  "signatureValid": true,
+  "signedHeadStillInChain": true,
+  "signedHeadIsLatest": true,
+  "signedAt": "2026-09-13T17:00:06Z",
+  "_signing_material": {
+    "publicKeyBase64": "NOT-CAPTURED-derived-fixture-has-no-ephemeral-demo-public-key",
+    "signature": "NOT-CAPTURED-derived-fixture-has-no-ephemeral-demo-signature",
+    "note": "Ephemeral demo key. Placeholders, never invented key material."
+  }
+}

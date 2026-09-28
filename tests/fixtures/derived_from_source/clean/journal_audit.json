@@ -1,0 +1,20 @@
+{
+  "tamperDetected": false,
+  "verdict": "SIN EVIDENCIA DE EDICION: la hash-chain recomputa limpia sobre 5 asientos y la firma del ultimo checkpoint (ML-DSA-65, seq 5, firmado 2026-09-13T17:00:06Z) cierra bajo la clave que el propio checkpoint guarda (integridad-de-mensaje, NO autenticidad: probar QUIEN firmo exige una clave anclada fuera de la DB). No descarta el truncado de la cola posterior al checkpoint. Tamper-EVIDENCE, no prevencion.",
+  "chainIntact": true,
+  "chainedCount": 5,
+  "brokenAtSeq": null,
+  "checkpointPresent": true,
+  "signatureAlgorithm": "ML-DSA-65",
+  "signedChainSeq": 5,
+  "signedHeadHash": "cde677b30425f78e44daf29dda7d335dc82ebf16de341aeddc1849aad0ad0952",
+  "signatureValid": true,
+  "signedHeadStillInChain": true,
+  "signedHeadIsLatest": true,
+  "signedAt": "2026-09-13T17:00:06Z",
+  "_signing_material": {
+    "publicKeyBase64": "NOT-CAPTURED-derived-fixture-has-no-ephemeral-demo-public-key",
+    "signature": "NOT-CAPTURED-derived-fixture-has-no-ephemeral-demo-signature",
+    "note": "Ephemeral demo key. Placeholders, never invented key material."
+  }
+}

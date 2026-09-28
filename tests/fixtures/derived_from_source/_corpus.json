@@ -1,0 +1,28 @@
+{
+  "corpus_kind": "derived_from_source",
+  "ac_0_2_eligible": false,
+  "ac_0_2_reason": "AC-0.2 and manifest section 2.6 require a corpus RECORDED from a running LedgerMind (the tampered half must come from a real POST /api/demo/tamper). This corpus was computed from the Java source instead, because the Docker daemon is down. It proves the tests; it does not prove the instrument.",
+  "derived_from": {
+    "repo": "github.com/juanfranpaezz/ledgermind",
+    "commit": "872505f03605e60168288ef056eed58794e9a1fc",
+    "symbols": [
+      "DemoSupportController.reset",
+      "DemoSupportController.tamper",
+      "JournalChainer.entryHash",
+      "JournalChainer.verify",
+      "Account.availableBalance",
+      "LedgerController.AccountView",
+      "JournalCheckpointService.audit",
+      "ReconciliationService.reconcileDemoFeed"
+    ]
+  },
+  "known_shape_gaps": [
+    "AccountView exposes neither pendingDebits nor allowNegative, so neither the three-term balance formula nor the no-overdraft exemption is recomputable from REST alone.",
+    "No REST endpoint and no MCP tool exposes posting_hash rows, so the hash chain is not independently recomputable without a read-only Postgres SELECT.",
+    "Account version numbers are derived (one increment per UPDATE), not observed.",
+    "createdAt is INVENTED and whole-second (17:00:01Z..17:00:05Z) while a real Postgres created_at carries microseconds. createdAt is part of the canonical string entryHash signs, so no entryHash here can ever equal a recorded one. Re-derive the chain from recorded rows; never compare hash literals across the two corpora. The derived-vs-recorded diff may normalise timestamp PRECISION only - never widen that into ignoring differences.",
+    "Discrepancy ORDER in the reconciliation report follows two Java HashMaps and is not reproducible; compare discrepancies as a set.",
+    "Checkpoint public key and signature are ephemeral runtime values and appear here as named placeholders, never as invented key material."
+  ],
+  "regenerate_with": "py tools/derive_fixtures.py"
+}

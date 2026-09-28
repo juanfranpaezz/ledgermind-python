@@ -1,0 +1,15 @@
+# Keys (plaintext or hash files) never enter the build context: they are mounted read-only at run time.
+*.key
+**/*.key
+*keys*
+**/*keys*
+.git
+**/__pycache__
+**/*.py[cod]
+.venv
+venv
+.pytest_cache
+build
+dist
+*.egg-info
+**/*.egg-info

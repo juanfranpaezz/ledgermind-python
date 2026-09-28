@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ledger-verification-agent"
+version = "0.0.1"
+description = "Read-only verification agent over the LedgerMind double-entry ledger. The model asks and explains; a deterministic Python checker decides."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "Apache-2.0" }
+dependencies = []
+
+# The verifier core ships ZERO runtime dependencies. The optional FastAPI service comes only through
+# the `api` extra below; the agent loop and any model transport are Phase 2, still gated.
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+# The optional local FastAPI service (package ledgermind_api/ at the repo root, run from a checkout
+# with `py -m ledgermind_api`). It never imports the verifier; the core above stays dependency-free.
+api = ["fastapi>=0.141.1", "uvicorn>=0.54.0"]
+api-test = ["httpx>=0.28.1", "pytest>=8.0"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "."]
+addopts = "-q"

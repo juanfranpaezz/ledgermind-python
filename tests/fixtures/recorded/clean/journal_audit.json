@@ -1,0 +1,15 @@
+{
+  "tamperDetected": false,
+  "verdict": "SIN EVIDENCIA DE EDICION: la hash-chain recomputa limpia sobre 5 asientos y la firma del ultimo checkpoint (ML-DSA-65, seq 5, firmado 2026-09-14T16:02:15.263710Z) cierra bajo la clave que el propio checkpoint guarda (integridad-de-mensaje, NO autenticidad: probar QUIEN firmo exige una clave anclada fuera de la DB). No descarta el truncado de la cola posterior al checkpoint. Tamper-EVIDENCE, no prevencion.",
+  "chainIntact": true,
+  "chainedCount": 5,
+  "brokenAtSeq": null,
+  "checkpointPresent": true,
+  "signatureAlgorithm": "ML-DSA-65",
+  "signedChainSeq": 5,
+  "signedHeadHash": "d6ba614f5f60beb4b6b69227c68c9fc0e310c58bd497599728f2f7083080159d",
+  "signatureValid": true,
+  "signedHeadStillInChain": true,
+  "signedHeadIsLatest": true,
+  "signedAt": "2026-09-14T16:02:15.263710Z"
+}

@@ -1,0 +1,36 @@
+{
+  "case": "overdraft_account",
+  "expected_violation": "no_overdraft",
+  "why": "wallet:ana is created with allowNegative = false, so a negative available balance is a violation. external:funding is created with allowNegative = true and its -158000 is LEGAL - a checker that flags every negative balance fires on the clean corpus and is therefore useless.",
+  "allow_negative_by_address": {
+    "external:funding": true,
+    "wallet:ana": false,
+    "wallet:beto": false
+  },
+  "accounts": {
+    "external:funding": {
+      "address": "external:funding",
+      "asset": "ARS",
+      "balance": -158000,
+      "postedDebits": 158000,
+      "postedCredits": 0,
+      "version": 3
+    },
+    "wallet:ana": {
+      "address": "wallet:ana",
+      "asset": "ARS",
+      "balance": -92500,
+      "postedDebits": 242500,
+      "postedCredits": 150000,
+      "version": 4
+    },
+    "wallet:beto": {
+      "address": "wallet:beto",
+      "asset": "ARS",
+      "balance": 50500,
+      "postedDebits": 0,
+      "postedCredits": 50500,
+      "version": 3
+    }
+  }
+}

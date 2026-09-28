@@ -1,0 +1,58 @@
+{
+  "corpus_kind": "recorded",
+  "ac_0_2_eligible": true,
+  "ac_0_2_reason": "Captured from a RUNNING LedgerMind demo stack. The tampered half comes from a real POST /api/demo/tamper against that stack, exactly as manifest section 2.6 requires; nothing here was computed or hand-edited.",
+  "recorded_at_utc": "2026-09-14T16:02:38Z",
+  "base_url": "http://localhost:8080",
+  "ledgermind_repo": "github.com/juanfranpaezz/ledgermind",
+  "http_requests": 21,
+  "http_429_encountered": 0,
+  "http_429_retries": 0,
+  "saved_response_statuses": {
+    "clean/account_external_funding.json": 200,
+    "clean/account_wallet_ana.json": 200,
+    "clean/account_wallet_beto.json": 200,
+    "clean/journal_verify.json": 200,
+    "clean/journal_audit.json": 200,
+    "clean/journal_checkpoint.json": 200,
+    "clean/journal_checkpoint_verify.json": 200,
+    "clean/reconciliation.json": 200,
+    "clean/postings_and_hashes.json": "db-select-read-only",
+    "tampered/account_external_funding.json": 200,
+    "tampered/account_wallet_ana.json": 200,
+    "tampered/account_wallet_beto.json": 200,
+    "tampered/journal_verify.json": 200,
+    "tampered/journal_audit.json": 200,
+    "tampered/journal_checkpoint.json": 200,
+    "tampered/journal_checkpoint_verify.json": 200,
+    "tampered/reconciliation.json": 200,
+    "tampered/postings_and_hashes.json": "db-select-read-only"
+  },
+  "chain_completeness_at_clean_capture": {
+    "postings": 5,
+    "posting_hash_rows": 5,
+    "chainedCount": 5,
+    "intact": true
+  },
+  "tampered_verify_after_stabilising": {
+    "intact": false,
+    "chainedCount": 4,
+    "brokenAtSeq": 5
+  },
+  "db_capture": {
+    "how": "docker compose exec -T -e PGOPTIONS=-c default_transaction_read_only=on postgres psql",
+    "read_only_enforced_by": "PostgreSQL itself (default_transaction_read_only=on). A client-side SELECT-prefix check is layered on top and is the WEAKER guard.",
+    "statements": [
+      "SELECT p.id, p.debit_account_id, p.credit_account_id, p.amount, p.asset, p.idempotency_key, to_char(p.created_at AT TIME ZONE 'UTC', 'YYYY-MM-DD\"T\"HH24:MI:SS.US') FROM posting p ORDER BY p.id",
+      "SELECT h.posting_id, h.seq, h.prev_hash, h.entry_hash FROM posting_hash h ORDER BY h.seq",
+      "SELECT a.id, a.address, a.asset, a.posted_debits, a.posted_credits, a.pending_debits, a.pending_credits, a.allow_negative, a.version FROM account a ORDER BY a.id"
+    ],
+    "writes_issued": 0
+  },
+  "known_shape_gaps": [
+    "The checkpoint public key and signature are real but EPHEMERAL: the demo generates a fresh ML-DSA key per boot, so they differ across runs and must never be compared across corpora.",
+    "createdAt carries real Postgres microseconds rendered as Instant.toString() renders them; the derived corpus fabricated whole seconds, so no entryHash can ever match across the two corpora. See docs/evidence/derived-vs-recorded-normalization.md.",
+    "Discrepancy ORDER in the reconciliation report follows two Java HashMaps and is not reproducible; compare discrepancies as a set."
+  ],
+  "regenerate_with": "py -m tools.record_fixtures"
+}

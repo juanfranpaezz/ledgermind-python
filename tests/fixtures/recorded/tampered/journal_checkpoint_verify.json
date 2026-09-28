@@ -1,0 +1,11 @@
+{
+  "present": true,
+  "algorithm": "ML-DSA-65",
+  "chainSeq": 5,
+  "headHash": "d6ba614f5f60beb4b6b69227c68c9fc0e310c58bd497599728f2f7083080159d",
+  "signatureValid": true,
+  "chainIntact": false,
+  "signedHeadStillInChain": true,
+  "isLatestHead": true,
+  "signedAt": "2026-09-14T16:02:15.263710Z"
+}

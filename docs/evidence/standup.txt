@@ -1,0 +1,129 @@
+AC-0.1 STAND-UP TRANSCRIPT - RECORDED 2026-09-14. MET.
+=================================================================
+
+elapsed_to_healthy_seconds=320        (cap: 600. Measured from the compose command to
+                                       the first 200 on GET /api/journal/audit.)
+
+THE EXACT COMMAND
+-----------------
+    cd "<ledgermind-checkout>"
+    docker compose -f docker-compose.observability.yml up --build -d postgres app
+
+Only postgres and app were named, so Prometheus and Grafana never started (the machine
+is RAM-tight). COMPOSE_UP_EXIT=0. The in-image Maven build ran cold and accounts for
+almost all of the 320 s; the app answered on the 12th poll, 5 s apart.
+
+    Container ledgermind-postgres-1 Started
+    Container ledgermind-postgres-1 Healthy
+    Container ledgermind-app-1 Started
+
+THE TRANSCRIPT
+--------------
+    $ curl -i http://localhost:8080/api/journal/audit
+
+HTTP/1.1 200
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self'; frame-ancestors 'none'
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Mon, 14 Sep 2026 15:59:57 GMT
+
+{"tamperDetected":false,"verdict":"SIN EVIDENCIA DE EDICION: la hash-chain recomputa limpia sobre 34 asientos y la firma del ultimo checkpoint (ML-DSA-65, seq 34, firmado 2026-06-16T03:25:02.892260Z) cierra bajo la clave que el propio checkpoint guarda (integridad-de-mensaje, NO autenticidad: probar QUIEN firmo exige una clave anclada fuera de la DB). No descarta el truncado de la cola posterior al checkpoint. Tamper-EVIDENCE, no prevencion.","chainIntact":true,"chainedCount":34,"brokenAtSeq":null,"checkpointPresent":true,"signatureAlgorithm":"ML-DSA-65","signedChainSeq":34,"signedHeadHash":"97f638ca928ba382a474a9c78534523abf0547a0dfa606fe10b74023daa86c12","signatureValid":true,"signedHeadStillInChain":true,"signedHeadIsLatest":true,"signedAt":"2026-06-16T03:25:02.892260Z"}
+
+ONE THING IN THAT BODY THAT IS WORTH READING TWICE
+--------------------------------------------------
+It reports 34 postings, not 5. The compose file mounts a NAMED VOLUME
+(ledgermind-pgdata), so the database survived from an earlier run in June and the demo
+came up with stale data rather than the clean 5-transfer scenario. Nothing is wrong with
+the app; it is the volume. The recorder therefore drives POST /api/demo/reset first
+(which TRUNCATEs and re-seeds) and asserts chain completeness before capturing anything -
+without that, the corpus would have silently inherited a nine-month-old ledger.
+
+The fallback path (./mvnw spring-boot:run) was NOT used; the primary worked.
+
+HONEST LABEL, carried from manifest v2 A8 item 6: even pasted, a committed curl
+transcript is SELF-ATTESTED evidence, not a re-executable check. The "it really came up"
+half is re-derivable only by someone with Docker running, and AC-0.1 is labelled [PROSE]
+on exactly that half. What IS re-executable here is the command and the elapsed
+measurement, both of which are reproduced above verbatim from the script's own stdout.
+
+
+---------------------------------------------------------------------------------
+SUPERSEDED - the BLOCKED-ON-DOCKER placeholder, 2026-09-13, kept verbatim below.
+Nothing after this line is current. It is preserved because deleting superseded
+evidence is how a record stops being auditable. Note that the absence-verification
+snippet it describes now correctly returns 1, not 0, and that is the criterion
+flipping on its own exactly as it was designed to.
+---------------------------------------------------------------------------------
+
+AC-0.1 STAND-UP TRANSCRIPT - NOT YET RECORDED. BLOCKED ON DOCKER.
+=================================================================
+
+STATUS: BLOCKED-ON-DOCKER as of 2026-09-13. The Docker daemon is down on this
+machine (see docs/evidence/preflight.txt, LEG 1, exit_code 1). The manifest's
+named ABORT action forbids improvising a workaround, so P0.1 was not started.
+
+THIS FILE DELIBERATELY DOES NOT CONTAIN AC-0.1's STATUS LITERAL.
+---------------------------------------------------------------
+AC-0.1's mechanical half (manifest v2 A8 item 6) is a grep for the successful
+status line plus the exact command used. Writing that literal into a placeholder
+would make the checker report MET on a stand-up that never happened - the single
+cheapest way to fake this criterion. The literal is therefore absent on purpose,
+and the grep correctly returns 0 today. When the real transcript is pasted in, it
+arrives with the literal and the criterion flips on its own.
+
+Verify the absence, as of this writing. The pattern is assembled from parts so
+that this instruction line does not itself become the match it is looking for -
+the first draft of this file failed exactly that way, greping 1 instead of 0:
+
+    $ PAT="HTTP/1.1"; grep -c "$PAT 200" docs/evidence/standup.txt
+    0
+
+EXACT COMMANDS, STAGED AND READY TO RUN
+---------------------------------------
+Run them in this order the moment the daemon is up. Primary path first; the
+fallback is only for a failure of the primary.
+
+PRIMARY (manifest v2 A1: the committed compose file already declares the app
+service, so NO new compose file is authored in either repo):
+
+    cd "<ledgermind-checkout>"
+    docker compose -f docker-compose.observability.yml up --build -d postgres app
+
+    # Compose starts only the named services plus their dependencies, so
+    # Prometheus and Grafana stay down. They are not needed to record fixtures.
+
+    # then, once the app reports healthy:
+    curl -i http://localhost:8080/api/journal/audit
+
+FALLBACK (only if the primary fails; README.md lines 97-103 of the LedgerMind
+repo). Note this path writes compiled output under target/, which is why the
+no-write guard excludes target/ by name (manifest v2.1 B4):
+
+    cd "<ledgermind-checkout>"
+    docker compose up -d
+    ./mvnw spring-boot:run -Dspring-boot.run.profiles=demo
+    curl -i http://localhost:8080/api/journal/audit
+
+WHAT COUNTS AS MET
+------------------
+  * curl -i prints the successful status line for GET /api/journal/audit, and
+    that line plus the exact command that produced it are pasted into this file
+    verbatim.
+  * elapsed_to_healthy_seconds <= 600, measured from the compose command to the
+    first successful audit response, and written here as a number.
+
+The hard cap on P0.1 is 60 minutes (manifest v2 A1 consequence 3). The cap now
+guards BUILD TIME - the app image runs Maven inside the build, so a cold
+dependency cache means a multi-minute build that needs network - not design
+uncertainty, which A1 removed.
+
+HONEST LABEL, carried from manifest v2 A8 item 6: even once pasted, a committed
+curl transcript is SELF-ATTESTED evidence, not a re-executable check. The
+"it really came up" half is re-derivable only by someone with Docker running,
+and AC-0.1 is labelled [PROSE] on exactly that half.

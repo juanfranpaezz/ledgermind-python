@@ -1,0 +1,85 @@
+{
+  "case": "chain_prev_hash_rewritten",
+  "expected_violation": "hash_chain",
+  "expected_broken_at_seq": 4,
+  "why": "Content is untouched; only the link is cut. A checker that only re-hashes posting content and never compares prevHash to the previous entryHash will MISS this, and it is the cheaper attack of the two.",
+  "postings": [
+    {
+      "id": 1,
+      "debitAccountId": 1,
+      "creditAccountId": 2,
+      "amount": 100000,
+      "asset": "ARS",
+      "idempotencyKey": "ORD-1001",
+      "createdAt": "2026-09-13T17:00:01Z"
+    },
+    {
+      "id": 2,
+      "debitAccountId": 1,
+      "creditAccountId": 2,
+      "amount": 50000,
+      "asset": "ARS",
+      "idempotencyKey": "ORD-1002",
+      "createdAt": "2026-09-13T17:00:02Z"
+    },
+    {
+      "id": 3,
+      "debitAccountId": 2,
+      "creditAccountId": 3,
+      "amount": 30000,
+      "asset": "ARS",
+      "idempotencyKey": "ORD-1003",
+      "createdAt": "2026-09-13T17:00:03Z"
+    },
+    {
+      "id": 4,
+      "debitAccountId": 2,
+      "creditAccountId": 3,
+      "amount": 12500,
+      "asset": "ARS",
+      "idempotencyKey": "ORD-1004",
+      "createdAt": "2026-09-13T17:00:04Z"
+    },
+    {
+      "id": 5,
+      "debitAccountId": 1,
+      "creditAccountId": 3,
+      "amount": 8000,
+      "asset": "ARS",
+      "idempotencyKey": "ORD-1005",
+      "createdAt": "2026-09-13T17:00:05Z"
+    }
+  ],
+  "postingHashes": [
+    {
+      "postingId": 1,
+      "seq": 1,
+      "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "entryHash": "994c6c15c9193a437727a1eb4d9d2c9bffab4b7be74fc2299175069e14e1885d"
+    },
+    {
+      "postingId": 2,
+      "seq": 2,
+      "prevHash": "994c6c15c9193a437727a1eb4d9d2c9bffab4b7be74fc2299175069e14e1885d",
+      "entryHash": "7a76c466cbfe740c82a32fa583cd8f048b0fb769e90ea9d567d4738dd9e4caa7"
+    },
+    {
+      "postingId": 3,
+      "seq": 3,
+      "prevHash": "7a76c466cbfe740c82a32fa583cd8f048b0fb769e90ea9d567d4738dd9e4caa7",
+      "entryHash": "5977f88602a711e069f5a5bbbaa7d1c1fc5e913dc4ac54dd93c2b399b66348a9"
+    },
+    {
+      "postingId": 4,
+      "seq": 4,
+      "prevHash": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "entryHash": "ab57a0730aec1378cc8ab8013e85deb3942851371e8316a596b868e9d8244c59"
+    },
+    {
+      "postingId": 5,
+      "seq": 5,
+      "prevHash": "ab57a0730aec1378cc8ab8013e85deb3942851371e8316a596b868e9d8244c59",
+      "entryHash": "cde677b30425f78e44daf29dda7d335dc82ebf16de341aeddc1849aad0ad0952"
+    }
+  ]
+}

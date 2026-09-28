@@ -1,0 +1,712 @@
+{
+  "components": {
+    "schemas": {
+      "AdversarialSnapshot": {
+        "additionalProperties": false,
+        "description": "One adversarial-format document uploaded as content.",
+        "properties": {
+          "case_label": {
+            "default": "upload",
+            "pattern": "^[a-z0-9_]{1,64}$",
+            "title": "Case Label",
+            "type": "string"
+          },
+          "document": {
+            "additionalProperties": true,
+            "title": "Document",
+            "type": "object"
+          },
+          "kind": {
+            "const": "adversarial",
+            "title": "Kind",
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "document"
+        ],
+        "title": "AdversarialSnapshot",
+        "type": "object"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "Health": {
+        "properties": {
+          "status": {
+            "const": "ok",
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "title": "Health",
+        "type": "object"
+      },
+      "JavaAuditRequest": {
+        "additionalProperties": false,
+        "description": "The Java ledger's own audit report, optionally with a recorded snapshot for the differential.",
+        "properties": {
+          "audit": {
+            "additionalProperties": true,
+            "description": "the JSON of Java's JournalIntegrityReport, as the MCP tool verify_journal_integrity returns it; interpreted, never recomputed",
+            "title": "Audit",
+            "type": "object"
+          },
+          "snapshot": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RecordedSnapshot"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "optional: a recorded half (same body as /v1/verify/snapshot kind=recorded); when given, the Python verifier runs on it and agree compares the two verdicts"
+          }
+        },
+        "required": [
+          "audit"
+        ],
+        "title": "JavaAuditRequest",
+        "type": "object"
+      },
+      "JavaAuditResponse": {
+        "properties": {
+          "agree": {
+            "anyOf": [
+              {
+                "enum": [
+                  "YES",
+                  "NO",
+                  "NOT_COMPARABLE"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Agree"
+          },
+          "java": {
+            "$ref": "#/components/schemas/UniformVerdict"
+          },
+          "python": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/UniformVerdict"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "java",
+          "python",
+          "agree"
+        ],
+        "title": "JavaAuditResponse",
+        "type": "object"
+      },
+      "RecordedSnapshot": {
+        "additionalProperties": false,
+        "description": "A recorded half uploaded as content: {file name: parsed JSON content}.",
+        "properties": {
+          "files": {
+            "additionalProperties": true,
+            "description": "postings_and_hashes.json (required), journal_checkpoint.json, journal_verify.json, journal_audit.json, account_<name>.json",
+            "title": "Files",
+            "type": "object"
+          },
+          "kind": {
+            "const": "recorded",
+            "title": "Kind",
+            "type": "string"
+          },
+          "label": {
+            "default": "clean",
+            "description": "cosmetic: never changes the verdict",
+            "enum": [
+              "clean",
+              "tampered"
+            ],
+            "title": "Label",
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "files"
+        ],
+        "title": "RecordedSnapshot",
+        "type": "object"
+      },
+      "ToolHttp": {
+        "properties": {
+          "method": {
+            "title": "Method",
+            "type": "string"
+          },
+          "path": {
+            "title": "Path",
+            "type": "string"
+          }
+        },
+        "required": [
+          "method",
+          "path"
+        ],
+        "title": "ToolHttp",
+        "type": "object"
+      },
+      "ToolSpec": {
+        "properties": {
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "http": {
+            "$ref": "#/components/schemas/ToolHttp"
+          },
+          "input_schema": {
+            "additionalProperties": true,
+            "title": "Input Schema",
+            "type": "object"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "read_only": {
+            "title": "Read Only",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "name",
+          "description",
+          "read_only",
+          "http",
+          "input_schema"
+        ],
+        "title": "ToolSpec",
+        "type": "object"
+      },
+      "UniformVerdict": {
+        "properties": {
+          "backend": {
+            "title": "Backend",
+            "type": "string"
+          },
+          "checks": {
+            "items": {
+              "$ref": "#/components/schemas/VerdictCheck"
+            },
+            "title": "Checks",
+            "type": "array"
+          },
+          "coverage_degraded": {
+            "title": "Coverage Degraded",
+            "type": "boolean"
+          },
+          "does_not_detect": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Does Not Detect",
+            "type": "array"
+          },
+          "duration_ms": {
+            "title": "Duration Ms",
+            "type": "integer"
+          },
+          "evidence_time": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evidence Time"
+          },
+          "exit_code": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Exit Code"
+          },
+          "frozen_accounts": {
+            "anyOf": [
+              {
+                "items": {
+                  "additionalProperties": true,
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Frozen Accounts"
+          },
+          "mapping_basis": {
+            "enum": [
+              "exit_code",
+              "field",
+              "legacy"
+            ],
+            "title": "Mapping Basis",
+            "type": "string"
+          },
+          "native": {
+            "additionalProperties": true,
+            "title": "Native",
+            "type": "object"
+          },
+          "notes": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Notes",
+            "type": "array"
+          },
+          "request_id": {
+            "title": "Request Id",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "signature": {
+            "$ref": "#/components/schemas/VerdictSignature"
+          },
+          "status": {
+            "$ref": "#/components/schemas/VerdictStatus"
+          },
+          "subject": {
+            "title": "Subject",
+            "type": "string"
+          },
+          "tamper_proven": {
+            "title": "Tamper Proven",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "schema_version",
+          "backend",
+          "status",
+          "tamper_proven",
+          "coverage_degraded",
+          "frozen_accounts",
+          "checks",
+          "signature",
+          "subject",
+          "evidence_time",
+          "does_not_detect",
+          "mapping_basis",
+          "exit_code",
+          "native",
+          "notes",
+          "request_id",
+          "duration_ms"
+        ],
+        "title": "UniformVerdict",
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
+      },
+      "VerdictCheck": {
+        "properties": {
+          "detail": {
+            "title": "Detail",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "result": {
+            "title": "Result",
+            "type": "string"
+          },
+          "violations": {
+            "title": "Violations",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "name",
+          "result",
+          "violations",
+          "detail"
+        ],
+        "title": "VerdictCheck",
+        "type": "object"
+      },
+      "VerdictSignature": {
+        "properties": {
+          "algorithm": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Algorithm"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "algorithm"
+        ],
+        "title": "VerdictSignature",
+        "type": "object"
+      },
+      "VerdictStatus": {
+        "enum": [
+          "VERIFIED",
+          "COVERAGE_DEGRADED",
+          "TAMPER_SUSPECTED",
+          "INCOMPLETE",
+          "ERROR"
+        ],
+        "title": "VerdictStatus",
+        "type": "string"
+      },
+      "VerifyCorpusRequest": {
+        "additionalProperties": false,
+        "description": "Verify a corpus registered on the server (no paths: ids only).",
+        "properties": {
+          "case": {
+            "anyOf": [
+              {
+                "pattern": "^[a-z0-9_-]{1,64}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "adversarial corpora",
+            "title": "Case"
+          },
+          "corpus_id": {
+            "description": "a registered corpus id",
+            "pattern": "^[a-z0-9_-]{1,64}$",
+            "title": "Corpus Id",
+            "type": "string"
+          },
+          "half": {
+            "anyOf": [
+              {
+                "enum": [
+                  "clean",
+                  "tampered"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "recorded corpora; default clean",
+            "title": "Half"
+          }
+        },
+        "required": [
+          "corpus_id"
+        ],
+        "title": "VerifyCorpusRequest",
+        "type": "object"
+      },
+      "VerifySnapshotRequest": {
+        "description": "An uploaded snapshot: kind=recorded (a recorded half) or kind=adversarial (one document).",
+        "discriminator": {
+          "mapping": {
+            "adversarial": "#/components/schemas/AdversarialSnapshot",
+            "recorded": "#/components/schemas/RecordedSnapshot"
+          },
+          "propertyName": "kind"
+        },
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/RecordedSnapshot"
+          },
+          {
+            "$ref": "#/components/schemas/AdversarialSnapshot"
+          }
+        ],
+        "title": "VerifySnapshotRequest"
+      }
+    },
+    "securitySchemes": {
+      "APIKeyHeader": {
+        "description": "Every route, including /openapi.json and /docs, requires this header.",
+        "in": "header",
+        "name": "X-API-Key",
+        "type": "apiKey"
+      }
+    }
+  },
+  "info": {
+    "description": "Local verification service over the LedgerMind double-entry ledger. Verdicts come from the deterministic Python checker (tools.verify_report) run in a child process; no model is involved. POST /v1/java/audit interprets the Java ledger's own audit report uploaded as JSON (the service never calls Java). Every route requires the X-API-Key header.",
+    "title": "LedgerMind API",
+    "version": "0.1.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/v1/health": {
+      "get": {
+        "operationId": "health_v1_health_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Health"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ],
+        "summary": "Liveness (authenticated)"
+      }
+    },
+    "/v1/java/audit": {
+      "post": {
+        "description": "Map the Java ledger's JournalIntegrityReport (uploaded as JSON; the service never calls Java) to the uniform verdict: tamperDetected wins, coverage states are COVERAGE_DEGRADED or INCOMPLETE, an unknown shape is ERROR. With an optional recorded snapshot the Python verifier also runs and agree is YES, NO or NOT_COMPARABLE. agree compares two readings of whatever was uploaded; neither input's provenance is authenticated. Any verdict is HTTP 200. Read-only.",
+        "operationId": "interpret_java_audit_v1_java_audit_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JavaAuditRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JavaAuditResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ],
+        "summary": "Interpret the Java ledger's own audit report"
+      }
+    },
+    "/v1/tools": {
+      "get": {
+        "operationId": "tools_v1_tools_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ToolSpec"
+                  },
+                  "title": "Response Tools V1 Tools Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ],
+        "summary": "Agent-callable tool catalog"
+      }
+    },
+    "/v1/verify/corpus": {
+      "post": {
+        "description": "Run the deterministic Python verifier on a corpus registered on the server (by id, never a path). Recorded corpora take half=clean|tampered; adversarial corpora take case=<name>. Any verdict, including TAMPER_SUSPECTED, is HTTP 200: the verdict is data. Read-only.",
+        "operationId": "verify_corpus_v1_verify_corpus_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerifyCorpusRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UniformVerdict"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ],
+        "summary": "Verify a registered corpus"
+      }
+    },
+    "/v1/verify/snapshot": {
+      "post": {
+        "description": "Upload a snapshot as JSON CONTENT (never a path) and run the deterministic Python verifier on it. kind=recorded: files={name: content} with postings_and_hashes.json required; kind=adversarial: one document. The verdict is byte-identical to the CLI's on the same files. The snapshot's provenance is not authenticated. Read-only.",
+        "operationId": "verify_snapshot_v1_verify_snapshot_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerifySnapshotRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UniformVerdict"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ],
+        "summary": "Verify an uploaded snapshot"
+      }
+    }
+  }
+}

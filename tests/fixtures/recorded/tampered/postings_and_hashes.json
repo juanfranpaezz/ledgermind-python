@@ -1,0 +1,117 @@
+{
+  "postings": [
+    {
+      "id": 1,
+      "debitAccountId": 1,
+      "creditAccountId": 2,
+      "amount": 100000,
+      "asset": "ARS",
+      "idempotencyKey": "ORD-1001",
+      "createdAt": "2026-09-14T16:02:15.037738Z"
+    },
+    {
+      "id": 2,
+      "debitAccountId": 1,
+      "creditAccountId": 2,
+      "amount": 50000,
+      "asset": "ARS",
+      "idempotencyKey": "ORD-1002",
+      "createdAt": "2026-09-14T16:02:15.087582Z"
+    },
+    {
+      "id": 3,
+      "debitAccountId": 2,
+      "creditAccountId": 3,
+      "amount": 30000,
+      "asset": "ARS",
+      "idempotencyKey": "ORD-1003",
+      "createdAt": "2026-09-14T16:02:15.118061Z"
+    },
+    {
+      "id": 4,
+      "debitAccountId": 2,
+      "creditAccountId": 3,
+      "amount": 12500,
+      "asset": "ARS",
+      "idempotencyKey": "ORD-1004",
+      "createdAt": "2026-09-14T16:02:15.147314Z"
+    },
+    {
+      "id": 5,
+      "debitAccountId": 1,
+      "creditAccountId": 3,
+      "amount": 8001,
+      "asset": "ARS",
+      "idempotencyKey": "ORD-1005",
+      "createdAt": "2026-09-14T16:02:15.176117Z"
+    }
+  ],
+  "postingHashes": [
+    {
+      "postingId": 1,
+      "seq": 1,
+      "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "entryHash": "059ca5ba4a3d9025958f05cc7451ad90006ac18723bba6e5d07cb70ec6b1d474"
+    },
+    {
+      "postingId": 2,
+      "seq": 2,
+      "prevHash": "059ca5ba4a3d9025958f05cc7451ad90006ac18723bba6e5d07cb70ec6b1d474",
+      "entryHash": "c6c0081bd7d3a5082c7f718c9058b4d923341eeeae0c646a22619d299db97836"
+    },
+    {
+      "postingId": 3,
+      "seq": 3,
+      "prevHash": "c6c0081bd7d3a5082c7f718c9058b4d923341eeeae0c646a22619d299db97836",
+      "entryHash": "cc53fe82de25578e9a3f4a32505af92b2af3859db84cef1de0d8acb6a3a08f2d"
+    },
+    {
+      "postingId": 4,
+      "seq": 4,
+      "prevHash": "cc53fe82de25578e9a3f4a32505af92b2af3859db84cef1de0d8acb6a3a08f2d",
+      "entryHash": "dee7a7265d310f71fce872b4441a5475175b05810f661378f29900bd8e500e25"
+    },
+    {
+      "postingId": 5,
+      "seq": 5,
+      "prevHash": "dee7a7265d310f71fce872b4441a5475175b05810f661378f29900bd8e500e25",
+      "entryHash": "d6ba614f5f60beb4b6b69227c68c9fc0e310c58bd497599728f2f7083080159d"
+    }
+  ],
+  "accounts": [
+    {
+      "id": 1,
+      "address": "external:funding",
+      "asset": "ARS",
+      "postedDebits": 158000,
+      "postedCredits": 0,
+      "pendingDebits": 0,
+      "pendingCredits": 0,
+      "allowNegative": true,
+      "version": 3
+    },
+    {
+      "id": 2,
+      "address": "wallet:ana",
+      "asset": "ARS",
+      "postedDebits": 42500,
+      "postedCredits": 150000,
+      "pendingDebits": 0,
+      "pendingCredits": 0,
+      "allowNegative": false,
+      "version": 4
+    },
+    {
+      "id": 3,
+      "address": "wallet:beto",
+      "asset": "ARS",
+      "postedDebits": 0,
+      "postedCredits": 50500,
+      "pendingDebits": 0,
+      "pendingCredits": 0,
+      "allowNegative": false,
+      "version": 3
+    }
+  ],
+  "_note": "DB-LEVEL capture through a READ-ONLY psql session (default_transaction_read_only=on). No REST endpoint and no MCP tool exposes posting_hash rows, and TransactionInfo omits idempotencyKey, so an independent recomputation of the chain is impossible over any wire surface. createdAt is rendered the way Instant.toString() renders it (0/3/6/9 fractional digits), because it is part of the canonical string entryHash signs."
+}

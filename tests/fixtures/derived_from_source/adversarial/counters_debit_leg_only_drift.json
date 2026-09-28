@@ -1,0 +1,88 @@
+{
+  "case": "counters_debit_leg_only_drift",
+  "expected_violation": "conservation",
+  "why": "ONLY the DEBIT half of the L2 counters-vs-replay comparison can catch this. The two postedDebits counters are moved 1000 in opposite directions, so the system-wide net still sums to zero (L3 stays silent), every postedCredits counter still agrees with the replay (the CREDIT half of L2 stays silent), every entry still balances leg-for-leg (L1 stays silent) and no account crosses its floor (no-overdraft stays silent). Before 2026-09-22 no fixture isolated this leg: the 2026-09-20 mutation sweep deleted the debit comparison (mutant M1d) and all 210 tests stayed green.",
+  "accounts": {
+    "external:funding": {
+      "address": "external:funding",
+      "asset": "ARS",
+      "balance": -157000,
+      "postedDebits": 157000,
+      "postedCredits": 0,
+      "version": 3
+    },
+    "wallet:ana": {
+      "address": "wallet:ana",
+      "asset": "ARS",
+      "balance": 106500,
+      "postedDebits": 43500,
+      "postedCredits": 150000,
+      "version": 4
+    },
+    "wallet:beto": {
+      "address": "wallet:beto",
+      "asset": "ARS",
+      "balance": 50500,
+      "postedDebits": 0,
+      "postedCredits": 50500,
+      "version": 3
+    }
+  },
+  "account_id_by_address": {
+    "external:funding": 1,
+    "wallet:ana": 2,
+    "wallet:beto": 3
+  },
+  "allow_negative_by_address": {
+    "external:funding": true,
+    "wallet:ana": false,
+    "wallet:beto": false
+  },
+  "postings": [
+    {
+      "id": 1,
+      "debitAccountId": 1,
+      "creditAccountId": 2,
+      "amount": 100000,
+      "asset": "ARS",
+      "idempotencyKey": "ORD-1001",
+      "createdAt": "2026-09-13T17:00:01Z"
+    },
+    {
+      "id": 2,
+      "debitAccountId": 1,
+      "creditAccountId": 2,
+      "amount": 50000,
+      "asset": "ARS",
+      "idempotencyKey": "ORD-1002",
+      "createdAt": "2026-09-13T17:00:02Z"
+    },
+    {
+      "id": 3,
+      "debitAccountId": 2,
+      "creditAccountId": 3,
+      "amount": 30000,
+      "asset": "ARS",
+      "idempotencyKey": "ORD-1003",
+      "createdAt": "2026-09-13T17:00:03Z"
+    },
+    {
+      "id": 4,
+      "debitAccountId": 2,
+      "creditAccountId": 3,
+      "amount": 12500,
+      "asset": "ARS",
+      "idempotencyKey": "ORD-1004",
+      "createdAt": "2026-09-13T17:00:04Z"
+    },
+    {
+      "id": 5,
+      "debitAccountId": 1,
+      "creditAccountId": 3,
+      "amount": 8000,
+      "asset": "ARS",
+      "idempotencyKey": "ORD-1005",
+      "createdAt": "2026-09-13T17:00:05Z"
+    }
+  ]
+}

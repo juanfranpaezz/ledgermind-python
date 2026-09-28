@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.coverage
+dist/
+build/
+
+# Evidence files are COMMITTED on purpose (they are the acceptance-criteria
+# checkers' inputs). Nothing under docs/evidence/ is ignored.

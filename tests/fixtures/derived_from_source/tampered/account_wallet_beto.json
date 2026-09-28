@@ -1,0 +1,8 @@
+{
+  "address": "wallet:beto",
+  "asset": "ARS",
+  "balance": 50500,
+  "postedDebits": 0,
+  "postedCredits": 50500,
+  "version": 3
+}

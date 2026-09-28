@@ -1,0 +1,33 @@
+{
+  "row": "06_field_chain_broken",
+  "cites": "JournalCheckpointService.java:528-538 (record JournalIntegrityReport), :319 (enum CoverageReason), LedgerMind f9a0956; plan v2 section 3.2 rule 1; tamper_proven via !chainIntact",
+  "expected": {
+    "status": "TAMPER_SUSPECTED",
+    "mapping_basis": "field",
+    "tamper_proven": true,
+    "coverage_degraded": false
+  },
+  "audit": {
+    "tamperDetected": true,
+    "verdict": "synthetic golden row",
+    "coverageDegraded": false,
+    "coverageReason": null,
+    "chainIntact": false,
+    "chainedCount": 4,
+    "brokenAtSeq": 5,
+    "checkpointPresent": true,
+    "signatureAlgorithm": "ML-DSA-65",
+    "signedChainSeq": 5,
+    "signedHeadHash": "d6ba614f5f60beb4b6b69227c68c9fc0e310c58bd497599728f2f7083080159d",
+    "signatureValid": true,
+    "signedHeadStillInChain": true,
+    "signedHeadIsLatest": true,
+    "signedAt": "2026-09-14T16:02:15.263710Z",
+    "balancesConsistent": true,
+    "accountsChecked": 3,
+    "balanceMismatches": [],
+    "unchainedPostings": 0,
+    "staleUnchainedPostings": 0,
+    "unchainedGraceMs": 5000
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "address": "external:funding",
+  "asset": "ARS",
+  "balance": -158000,
+  "postedDebits": 158000,
+  "postedCredits": 0,
+  "version": 3
+}

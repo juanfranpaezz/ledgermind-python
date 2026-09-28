@@ -1,0 +1,78 @@
+{
+  "case": "counters_disagree_with_postings",
+  "expected_violation": "conservation",
+  "why": "Balances are DERIVED from counters, never stored, so a counter that drifts from the posting history is invisible to the ledger's own hash chain: the chain protects the postings, not the counters. This is the gap the Python checker closes and the ledger does not.",
+  "accounts": {
+    "external:funding": {
+      "address": "external:funding",
+      "asset": "ARS",
+      "balance": -158000,
+      "postedDebits": 158000,
+      "postedCredits": 0,
+      "version": 3
+    },
+    "wallet:ana": {
+      "address": "wallet:ana",
+      "asset": "ARS",
+      "balance": 107500,
+      "postedDebits": 42500,
+      "postedCredits": 150000,
+      "version": 4
+    },
+    "wallet:beto": {
+      "address": "wallet:beto",
+      "asset": "ARS",
+      "balance": 50501,
+      "postedDebits": 0,
+      "postedCredits": 50501,
+      "version": 3
+    }
+  },
+  "postings": [
+    {
+      "id": 1,
+      "debitAccountId": 1,
+      "creditAccountId": 2,
+      "amount": 100000,
+      "asset": "ARS",
+      "idempotencyKey": "ORD-1001",
+      "createdAt": "2026-09-13T17:00:01Z"
+    },
+    {
+      "id": 2,
+      "debitAccountId": 1,
+      "creditAccountId": 2,
+      "amount": 50000,
+      "asset": "ARS",
+      "idempotencyKey": "ORD-1002",
+      "createdAt": "2026-09-13T17:00:02Z"
+    },
+    {
+      "id": 3,
+      "debitAccountId": 2,
+      "creditAccountId": 3,
+      "amount": 30000,
+      "asset": "ARS",
+      "idempotencyKey": "ORD-1003",
+      "createdAt": "2026-09-13T17:00:03Z"
+    },
+    {
+      "id": 4,
+      "debitAccountId": 2,
+      "creditAccountId": 3,
+      "amount": 12500,
+      "asset": "ARS",
+      "idempotencyKey": "ORD-1004",
+      "createdAt": "2026-09-13T17:00:04Z"
+    },
+    {
+      "id": 5,
+      "debitAccountId": 1,
+      "creditAccountId": 3,
+      "amount": 8000,
+      "asset": "ARS",
+      "idempotencyKey": "ORD-1005",
+      "createdAt": "2026-09-13T17:00:05Z"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "address": "wallet:ana",
+  "asset": "ARS",
+  "balance": 107500,
+  "postedDebits": 42500,
+  "postedCredits": 150000,
+  "version": 4
+}

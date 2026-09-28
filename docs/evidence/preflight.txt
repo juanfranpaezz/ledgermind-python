@@ -1,0 +1,89 @@
+AC-0.0 PREFLIGHT - LedgerMind verification agent, Phase 0
+Plan: manifest v2 section A2, third leg replaced by v2.1 section B4.
+Operator: coder agent. Machine: Windows 11, Git Bash + PowerShell.
+Captured: 2026-09-13T20:25:02Z (UTC)
+
+==============================================================
+LEG 1 - docker info   (required: exit_code == 0)
+==============================================================
+$ docker --version
+Docker version 29.3.0, build 5927d80
+
+$ docker info
+    Path:     C:\Program Files\Docker\cli-plugins\docker-scout.exe
+
+Server:
+failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+
+exit_code: 1
+LEG 1 RESULT: FAIL
+
+==============================================================
+LEG 2 - py -V         (required: >= 3.11)
+==============================================================
+$ py -V
+Python 3.13.2
+exit_code: 0
+LEG 2 RESULT: PASS (3.13.2 >= 3.11)
+
+NOTE carried from manifest v2 A2: bare 'python' on this machine is the
+Microsoft Store alias stub and does not run. Every command in this repo and
+in every acceptance criterion is written 'py -m ...', never 'python -m ...'.
+
+==============================================================
+LEG 3 - JAVA_HOME     (v2.1 B4: Test-Path + a 21.x version string)
+==============================================================
+PowerShell form (this machine's primary shell):
+$ Test-Path $env:JAVA_HOME
+True
+$ & "$env:JAVA_HOME\bin\java.exe" -version
+openjdk version "21.0.11" 2026-04-21 LTS
+OpenJDK Runtime Environment Temurin-21.0.11+10 (build 21.0.11+10-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.11+10 (build 21.0.11+10-LTS, mixed mode, sharing)
+
+Git Bash equivalent (v2.1 B4 names both):
+$ echo "$JAVA_HOME"; test -d "$JAVA_HOME" && "$JAVA_HOME/bin/java" -version
+JAVA_HOME=<user-home>\.jdks\jdk-21.0.11+10
+test -d: OK
+openjdk version "21.0.11" 2026-04-21 LTS
+
+LEG 3 RESULT: PASS (JAVA_HOME exists and reports 21.0.11)
+
+==============================================================
+PREFLIGHT VERDICT
+==============================================================
+PREFLIGHT-ABORT: docker daemon down
+
+Failing leg: LEG 1 (docker info exit_code=1).
+Error text, verbatim: failed to connect to the docker API at
+npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and
+if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system
+cannot find the file specified.
+
+The named ABORT action from manifest v2 A2 was followed exactly:
+  - P0.1 (stand-up) was NOT started.
+  - No workaround was improvised and nothing was installed.
+  - The Phase 1 go decision goes to the project owner at the end-of-Phase-0 review with one line for him:
+    'start Docker Desktop and say go, or take the fallback.'
+
+Everything in Phase 0 that does NOT need a running LedgerMind was completed
+instead; see docs/evidence/phase0-blocked-items.md for the exact commands
+that are staged and ready to run the moment the daemon is up.
+
+=================================================================
+PREFLIGHT RE-RUN - 2026-09-14, appended. The 2026-09-13 PREFLIGHT-ABORT
+above stays: it is the record of why Phase 0 stopped, not an error.
+=================================================================
+
+LEG 1 - Docker daemon
+  $ docker info   -> exit_code 0
+
+LEG 2 - Python
+  $ py -V         -> Python 3.13.2   (requirement: >= 3.11)
+
+LEG 3 - JAVA_HOME (PowerShell, as the manifest specifies)
+  $ Test-Path $env:JAVA_HOME -> True
+  $ java -version -> openjdk version "21.0.11" 2026-04-21 LTS
+
+ALL THREE LEGS GREEN -> the ABORT condition of manifest v2 A2 no longer holds.
+Stand-up transcript: docs/evidence/standup.txt (HTTP/1.1 200, 320 s).

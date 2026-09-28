@@ -1,0 +1,34 @@
+{
+  "feedCount": 5,
+  "ledgerCount": 5,
+  "matched": 3,
+  "feedTotal": 154762,
+  "ledgerTotal": 200501,
+  "difference": -45739,
+  "discrepancies": [
+    {
+      "type": "AMOUNT_MISMATCH",
+      "ref": "ORD-1003",
+      "feedAmount": 29961,
+      "ledgerAmount": 30000,
+      "detail": "diferencia de -39 en 'ORD-1003' (el PSP liquidó menos: posible comisión/retención no asentada)"
+    },
+    {
+      "type": "MISSING_IN_LEDGER",
+      "ref": "PSP-ONLY-9999",
+      "feedAmount": 4300,
+      "ledgerAmount": 0,
+      "detail": "el PSP liquidó 4300 para 'PSP-ONLY-9999' y no hay asiento"
+    },
+    {
+      "type": "MISSING_IN_FEED",
+      "ref": "ORD-1002",
+      "feedAmount": 0,
+      "ledgerAmount": 50000,
+      "detail": "el ledger tiene 50000 para 'ORD-1002' que el PSP no reporta"
+    }
+  ],
+  "balanced": false,
+  "summary": "Descuadre: 3 discrepancia(s). Feed=154762 Ledger=200501 (diferencia -45739).",
+  "_note": "SHAPE NOTE: this is the demo feed produced by POST /api/demo/reconcile. The agent's own reconcile_against_feed tool posts a feed body to POST /api/reconciliation and gets this same ReconciliationReport shape back. ORDERING: the Java builds the discrepancy list from two HashMaps, so compare discrepancies as a set, never by index."
+}

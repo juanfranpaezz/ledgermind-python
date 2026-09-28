@@ -1,0 +1,53 @@
+{
+  "case": "unbalanced_posting",
+  "expected_violation": "conservation",
+  "why": "A double-entry posting whose credit leg is 500 smaller than its debit leg. LedgerMind's own schema cannot represent this (one amount column serves both legs), so it can ONLY arrive from a corrupted feed or a hand-built payload - which is exactly why the checker must not assume the invariant holds.",
+  "postings": [
+    {
+      "id": 1,
+      "debitAccountId": 1,
+      "creditAccountId": 2,
+      "amount": 100000,
+      "asset": "ARS",
+      "idempotencyKey": "ORD-1001",
+      "createdAt": "2026-09-13T17:00:01Z"
+    },
+    {
+      "id": 2,
+      "debitAccountId": 1,
+      "creditAccountId": 2,
+      "amount": 50000,
+      "asset": "ARS",
+      "idempotencyKey": "ORD-1002",
+      "createdAt": "2026-09-13T17:00:02Z"
+    },
+    {
+      "id": 3,
+      "debitAccountId": 2,
+      "creditAccountId": 3,
+      "amount": 30000,
+      "asset": "ARS",
+      "idempotencyKey": "ORD-1003",
+      "createdAt": "2026-09-13T17:00:03Z",
+      "creditAmount": 29500
+    },
+    {
+      "id": 4,
+      "debitAccountId": 2,
+      "creditAccountId": 3,
+      "amount": 12500,
+      "asset": "ARS",
+      "idempotencyKey": "ORD-1004",
+      "createdAt": "2026-09-13T17:00:04Z"
+    },
+    {
+      "id": 5,
+      "debitAccountId": 1,
+      "creditAccountId": 3,
+      "amount": 8000,
+      "asset": "ARS",
+      "idempotencyKey": "ORD-1005",
+      "createdAt": "2026-09-13T17:00:05Z"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "tamperDetected": true,
+  "verdict": "MANIPULACION DETECTADA: la hash-chain se rompe en seq 5 (un asiento fue editado o borrado tras encadenarse);",
+  "chainIntact": false,
+  "chainedCount": 4,
+  "brokenAtSeq": 5,
+  "checkpointPresent": true,
+  "signatureAlgorithm": "ML-DSA-65",
+  "signedChainSeq": 5,
+  "signedHeadHash": "d6ba614f5f60beb4b6b69227c68c9fc0e310c58bd497599728f2f7083080159d",
+  "signatureValid": true,
+  "signedHeadStillInChain": true,
+  "signedHeadIsLatest": true,
+  "signedAt": "2026-09-14T16:02:15.263710Z"
+}

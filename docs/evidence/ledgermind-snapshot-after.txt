@@ -1,0 +1,81 @@
+# LedgerMind no-write snapshot (manifest v2 A4, narrowed by v2.1 B4)
+# repo: <ledgermind-checkout>
+# HEAD: 872505f03605e60168288ef056eed58794e9a1fc
+# porcelain command: git status --porcelain -- . ':(exclude)target'
+# protected set: src/**, pom.xml, docker-compose.yml, docker-compose.observability.yml, Dockerfile
+# NOTE: HEAD and timestamps are informational; the comparison is over
+#       the PORCELAIN and SHA256 sections below.
+
+[PORCELAIN] entries=8
+ M observability/grafana/dashboards/ledgermind.json
+ M src/main/java/com/ledgermind/ledger/JournalCheckpointService.java
+ M src/main/java/com/ledgermind/ledger/mcp/DemoAuthorizationServerConfig.java
+ M src/main/java/com/ledgermind/ledger/mcp/McpServerSecurityConfig.java
+ M src/main/resources/static/index.html
+ M src/test/java/com/ledgermind/ledger/JournalCheckpointServiceTest.java
+?? src/main/resources/static/js/
+?? src/test/java/com/ledgermind/ledger/mcp/McpJwtValidatorTest.java
+
+[SHA256] files=62
+4da421cb2b4eafe8c0a4572087536f950a72faec680fc1593a745cf429cc7f7a  Dockerfile
+04cd5d0740e4a4bc4cf605f0b15f923f9cd5d0aa60ed6be79db067c145d7d5e6  docker-compose.observability.yml
+8be4776dc80a23493beee883d49ea1d4fde8a8d4f95f70e3c7d3d9c684d0e500  docker-compose.yml
+26432c5a08860740d6cd0b3822a1897ecf37ef364df773fee0b824d245f2dfb0  pom.xml
+e98470b01d66dca426df781df59dcb891e709b24d96e92b95b1a06d9a7d13835  src/main/java/com/ledgermind/LedgermindApplication.java
+68cea084ecaeb2fec4ee670adf22316197713c0a90fe2ce627be9aef1f1b69d0  src/main/java/com/ledgermind/ledger/Account.java
+1038223f92b7b8926a363db610f7d3128a219619d1dc0440fd26d5b82bed4522  src/main/java/com/ledgermind/ledger/AccountNotFoundException.java
+39736ff9eb6d321b28a42c2080a2d7e7e37d38ccefc53a696ea518ed05aa9835  src/main/java/com/ledgermind/ledger/AccountRepository.java
+8bcb5f16e4ccc26caeea3159227f8cc3d49e00824a61a4e2f97a5ea43bf568a5  src/main/java/com/ledgermind/ledger/IdempotencyConflictException.java
+fc8e360d80c376b3b3dc27a5e5b91bb45a23f1cc1acdb92564f7427c8a03a516  src/main/java/com/ledgermind/ledger/InsufficientFundsException.java
+797a79015e3759475a3b1797bbf1fd9224515de1807f5bb935d6850ba0911d30  src/main/java/com/ledgermind/ledger/JournalChainer.java
+6ca9f8583e435625259537289e95288f320c8e1df3651526eeb2955e0c43b7ec  src/main/java/com/ledgermind/ledger/JournalCheckpoint.java
+f69676dcd0cf01717e427a33f44a53f7f5fbf3e1196b20b74ac67866eb2d7cfc  src/main/java/com/ledgermind/ledger/JournalCheckpointRepository.java
+b4896f4d9c5a9e4042efe785df98f822c8ddffa6a94c0f39a705013c64bb81f3  src/main/java/com/ledgermind/ledger/JournalCheckpointService.java
+04fd74d5583f79c97dd849f2c82722a54a825438fb18c08fc780fa14c9bc4112  src/main/java/com/ledgermind/ledger/JournalSigner.java
+3c559a9129aa952ed79d999f05b9aabeea147c8fc875289c455ec2ab56929ca7  src/main/java/com/ledgermind/ledger/LedgerService.java
+d74121ed77a350f3750dcaf8f73a0e985778704899415921c853695d56814668  src/main/java/com/ledgermind/ledger/MlDsaJournalSigner.java
+06d9ba0976039329b4f3342987e9f16218ecd83f42597c11229abfd8125b01c5  src/main/java/com/ledgermind/ledger/Posting.java
+8a16131ea61c60462ad3ea0778134c60ec1ba68f8503099b508ef93ced4fefa8  src/main/java/com/ledgermind/ledger/PostingHash.java
+a93958f9ad3ad305a6066680455da11eb09f5e0b04a2c2b15405bca603492a01  src/main/java/com/ledgermind/ledger/PostingHashRepository.java
+9fab089f77ca662e87cbaecd87e70271e54fee8e6ecdf20f85180f394e14fa03  src/main/java/com/ledgermind/ledger/PostingRepository.java
+56ca0c1823fb765587c190719b557f5144acd6647cfb96713d1eda27fb77009c  src/main/java/com/ledgermind/ledger/TransferCommand.java
+bb125bb073781a22e72d3fffb4deb98bb7c6a4a5ea4d6e38abcc072ebdde22a3  src/main/java/com/ledgermind/ledger/TransferConflictException.java
+bb07c46830c1bf55c72683bf47e62cc936a8f37085b7aa86ffbb13be2122d6a4  src/main/java/com/ledgermind/ledger/TransferService.java
+c9ed353101ba7a12b242d0c05be2092694b80117e68b2b5c3b9bcbfeb08086b0  src/main/java/com/ledgermind/ledger/mcp/DemoAuthorizationServerConfig.java
+a408a563c877c02f60ec3668ec452a3ef1c5f0c59c3cb5ec3e4e00971e4d7798  src/main/java/com/ledgermind/ledger/mcp/LedgerMcpTools.java
+ca513effb486ec1ef8d2984292e341d6eb761446c1d7c21c2cbb8c65d9cec965  src/main/java/com/ledgermind/ledger/mcp/McpConfig.java
+8471f9248056b1e458447ce6f2a88cd56df02120e018af68ea5cfdbaa1b5fba2  src/main/java/com/ledgermind/ledger/mcp/McpServerSecurityConfig.java
+e8521a0aef19fe6866bb5b58d5b7352053e3e3aebf28c1cffb13a9b759f0082f  src/main/java/com/ledgermind/ledger/package-info.java
+86c06c2c8ef178215867e6562440b7690f4553ee3948515f1d95458754f6e7e0  src/main/java/com/ledgermind/ledger/reconciliation/Discrepancy.java
+201ccabf02575aae73bf16aed67c2e0b73fbdfdde9b3af9c61dfd04ee1fda031  src/main/java/com/ledgermind/ledger/reconciliation/LedgerEntry.java
+e1ee39182ab7e9836ef8651415c6fa85448178d5f7391f58709b98ff929b98c0  src/main/java/com/ledgermind/ledger/reconciliation/ReconciliationMatcher.java
+9e29f464cc85e936588cc08f08a84cc7461a3a04556bcfb1468bd0aa2040e686  src/main/java/com/ledgermind/ledger/reconciliation/ReconciliationReport.java
+0d14c9dba8c8eb4f8f296308c6374623a3b108a6c6a0a29d6920ebc85af2dc60  src/main/java/com/ledgermind/ledger/reconciliation/ReconciliationService.java
+326dba6bfb0684a296548d4a1d8c517966503fc312af33b488910d95a866b488  src/main/java/com/ledgermind/ledger/reconciliation/SettlementRecord.java
+d4fdefd9ba6968c76b46555ae431fc530eb61040f0851012f038e94083a37552  src/main/java/com/ledgermind/ledger/web/DemoSupportController.java
+9510511589c706db02098a6b5c6bd7d83e327ed134172565bcb4600d72887766  src/main/java/com/ledgermind/ledger/web/LedgerController.java
+88d4209fcafdf7bbdc062e57113cb5ecafc8c4643ad0c142bf90908a2131c643  src/main/java/com/ledgermind/ledger/web/LedgerExceptionHandler.java
+92c932651d5d69dd5c83535fdcc022bcbd6cb64ef48a2cd6d0d8da0d9d3e0529  src/main/java/com/ledgermind/ledger/web/RateLimitFilter.java
+86247da59233c32a49cff1d854857e43d15951fc278f4c5afc0fd8cb5cae6c4a  src/main/resources/application-demo.yml
+119a0e488bf4f65f726f8b8c65c2dbe7745c8c89f41310540c678f875ba94033  src/main/resources/application.yml
+8c286e94ae1969c3ec1559922664e92c6241a6ab2736bba85fb978fd00a78e92  src/main/resources/db/migration/V1__create_ledger_core.sql
+edf84b1555ddfd0d901f60c942c8609c9279abc17416db6261f50f82cdc15803  src/main/resources/db/migration/V2__asset_match_constraint.sql
+144ff990a3d0a388b4a96a0d2a6ba924f553815b38cfd057ef5bcbed2902e1ee  src/main/resources/db/migration/V3__journal_hash_chain.sql
+a1149a76b807c470b79633fcde8159aaf160c5c4007aa71b969ea619917c0e6c  src/main/resources/db/migration/V4__journal_checkpoint.sql
+f3e350d431f460ac5295eba07730d62d58c4c5883c570058b98189193581f07d  src/main/resources/static/index.html
+0853fd9a2af3f890771fc3615151a56f497ba12ba43f2e1b6be61f0754dbae8a  src/test/java/com/ledgermind/LedgermindApplicationTests.java
+5d64ba1bed2a3143bf44c0d09c2ab7ce7ef584c2472b94dd07f7e8544d921061  src/test/java/com/ledgermind/TestLedgermindApplication.java
+478c9a8973664c5d9b58ea4d5750680461d9df440dbcf91ffe6b4e7e4aaca1d2  src/test/java/com/ledgermind/TestcontainersConfiguration.java
+73f2f234988af784697d787535ef494ebe5518853816ae7cf73025a247ae9350  src/test/java/com/ledgermind/ledger/IdempotencyMismatchTest.java
+2642f16ab6c011eac157d266fcecd70da3dbd679f6a71b8d7d4ae6498fb964e6  src/test/java/com/ledgermind/ledger/IdempotencyReplayConcurrencyTest.java
+ee04845c4f2ad5eb49544b45952af1adbe86b7987e3174c09bf5066f83cc994b  src/test/java/com/ledgermind/ledger/JournalChainerTest.java
+cbca81f989cc160b57b5c4c40aa47c1c5177d2c2041836049a7a919ac39ad83c  src/test/java/com/ledgermind/ledger/JournalCheckpointServiceTest.java
+e3f2abb1fbcc315417fdedeaf8a436a8b8fc525343be374abe7e1e0051bbb577  src/test/java/com/ledgermind/ledger/LedgerConcurrencySpikeTest.java
+e29faa5809d2ea2347c5c1bb3a91b6ffaaa0145fd79a18e607d8b3ab63b3bb0f  src/test/java/com/ledgermind/ledger/MlDsaJournalSignerTest.java
+14beef5fc80371b89fc15de60da555699b6bf9c7f043c82202bb14ea4b860a8b  src/test/java/com/ledgermind/ledger/mcp/LedgerMcpToolsSecurityTest.java
+80a36f21a0faa63486fb659d6c87fccbb268915fb5458f2502af7222491260df  src/test/java/com/ledgermind/ledger/mcp/McpOAuthAudienceTest.java
+73daff354abbf3f4b65d95a4463fbd99009afba8d3951fb5811c5bd1f88064e3  src/test/java/com/ledgermind/ledger/mcp/McpToolsRegistrationTest.java
+e7514bf22a7a8403d4a823ecca0a3e66afd219fe651f2076885dbf9ef310a94e  src/test/java/com/ledgermind/ledger/reconciliation/ReconciliationMatcherTest.java
+9412e5bbcc98ed7c6135b2d91bdc59f3d9c658f8c5f4e16ca25c7b4370b3b85c  src/test/java/com/ledgermind/ledger/reconciliation/ReconciliationServiceTest.java
+dd0bcdc7e1542da222f93bc7b8b5d2560327b5cdc5272191c488560fd7cb20ec  src/test/java/com/ledgermind/ledger/web/DemoSupportControllerTest.java
+76f841759dac8b15860e75a98529b61ca3b869be6a3abad1215e10f570406429  src/test/java/com/ledgermind/ledger/web/LedgerApiIntegrationTest.java

@@ -1,0 +1,11 @@
+{
+  "row": "13_recorded_tampered_real",
+  "cites": "JournalCheckpointService.java:528-538 (record JournalIntegrityReport), :319 (enum CoverageReason), LedgerMind f9a0956; plan v2 section 3.2 the real audit of the tampered half: chain breaks at seq 5",
+  "expected": {
+    "status": "TAMPER_SUSPECTED",
+    "mapping_basis": "legacy",
+    "tamper_proven": true,
+    "coverage_degraded": false
+  },
+  "audit_fixture": "tests/fixtures/recorded/tampered/journal_audit.json"
+}
