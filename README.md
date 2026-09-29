@@ -8,8 +8,9 @@ verdict is produced by a deterministic Python checker, not by the model.
 > Phase-0 gate (preflight evidence, a recorded and a source-derived fixture corpus,
 > the read-only tool registry as declarative metadata, the guards that protect the
 > Java ledger from being written to) **and the Phase-1 deterministic verifier**.
-> There is still **no agent loop, no model client and no HTTP client**; those are
-> Phase 2, which is gated behind a pending design decision. An **optional
+> There is still **no agent loop, no model client and no HTTP client**. Phase 2 (agent loop,
+> evals, CI) is a planned addition after 2026-10-28, on a simulated model at zero cost; the
+> verifier and the FastAPI service are complete. An **optional
 > FastAPI service** now exists in `ledgermind_api/` (API Run A): it runs the verifier
 > CLI behind an API key, binds 127.0.0.1:8088 by default, and sits outside the verifier
 > package. API Run B added the Java audit route, a Dockerfile, a committed
@@ -40,12 +41,12 @@ conservation, no-overdraft and hash-chain continuity, and **it** produces the ve
 | **P1** | **Deterministic verifier (3 invariants, citations, verdict object)** | **done - see "Phase 1" below** |
 | API Run A | Optional FastAPI service over the verifier CLI (`ledgermind_api/`, tests in `tests_api/`) | **done** - runs locally, 127.0.0.1 by default |
 | API Run B | Java audit route, Docker image, committed `docs/openapi.json`, runbook | **done** - see "FastAPI service (optional)" |
-| P2+ | Agent loop, evals, CI, docs | **not started** - gated behind a pending design decision |
+| P2+ | Agent loop, evals, CI, docs | **not started** - a planned addition after 2026-10-28, on a simulated model at zero cost |
 
 ## Run what exists
 
 ```
-py -m pytest                                  # 380 tests, no network, no services
+py -m pytest                                  # 384 tests, no network, no services
 py -m tools.verify_report --corpus recorded --half clean --corpus-root <dir>  # a corpus outside the repo
 py -m tools.verify_report --corpus recorded --half clean      # exit 0, verdict OK
 py -m tools.verify_report --corpus recorded --half tampered   # exit 1, verdict TAMPERED
@@ -215,8 +216,9 @@ the machine-readable contract is [`docs/openapi.json`](docs/openapi.json).
 **Honest limits.** The verdict is about the uploaded snapshot, not the live ledger. VERIFIED is
 not "ledger intact": it means no evidence of what the checks detect. The provenance of an
 uploaded snapshot or audit is not authenticated, so `agree` compares two readings of whatever
-was uploaded. There is no TLS. There is no AI model in this phase; "LedgerMind Python" is not
-at 100% until an agent loop exists.
+was uploaded. There is no TLS. There is no AI model in this phase. Phase 2 (agent loop, evals,
+CI) is a planned addition after 2026-10-28, on a simulated model at zero cost; the verifier and
+the FastAPI service are complete.
 
 ### Where the process boundary is
 

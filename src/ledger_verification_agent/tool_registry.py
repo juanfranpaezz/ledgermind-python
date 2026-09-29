@@ -2,7 +2,8 @@
 
 PHASE 0 SCOPE. This module declares WHICH tools exist and WHAT surface each one
 reaches. It deliberately contains no HTTP client, no transport and no callable
-tool body: those are Phase 2 deliverables, gated behind a pending design decision.
+tool body: those belong to Phase 2, a planned addition after 2026-10-28, on a
+simulated model at zero cost.
 Declaring the surface now is what lets the AC-0.3 tool-count check and the
 read-only allow-list check exist and be proven to fire both ways before any code
 that can actually talk to the ledger is written.

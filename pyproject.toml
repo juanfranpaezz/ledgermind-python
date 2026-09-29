@@ -12,7 +12,8 @@ license = { text = "Apache-2.0" }
 dependencies = []
 
 # The verifier core ships ZERO runtime dependencies. The optional FastAPI service comes only through
-# the `api` extra below; the agent loop and any model transport are Phase 2, still gated.
+# the `api` extra below. The agent loop and any model transport are Phase 2, a planned addition
+# after 2026-10-28 on a simulated model at zero cost.
 [project.optional-dependencies]
 dev = ["pytest>=8.0"]
 # The optional local FastAPI service (package ledgermind_api/ at the repo root, run from a checkout
